@@ -7,6 +7,7 @@ using BankChallenge.Business.Validators;
 using BankChallenge.Business.Validators.Account;
 using BankChallenge.Shared.Dtos.Account;
 using Matsoft.ApiResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BankChallenge.Business.Services;
 
@@ -182,7 +183,7 @@ public class AccountService(
         }
     }
 
-    public async Task<ApiResult> FulfillDebt(FulfillDebtRequestDto request, string accountHolderId)
+    public async Task<ApiResult> PayOffDebt(PayOffDebtRequestDto request, string accountHolderId)
     {
         using var uowSession = await unitOfWork.StartSessionAsync();
 
@@ -190,7 +191,7 @@ public class AccountService(
 
         try
         {
-            var requestValidation = await new FulfillDebtRequestDtoValidator().ValidateAsync(request);
+            var requestValidation = await new PayOffDebtRequestDtoValidator().ValidateAsync(request);
 
             if (!requestValidation.IsValid)
                 return Result.Error(
@@ -206,7 +207,10 @@ public class AccountService(
 
             if (debt is null)
                 return Result.Error(BankChallengeError.Debt_Error_NonExists);
-
+            
+            if (!debt.AccountHolderId.Equals(accountHolderId))
+                return Result.Error(BankChallengeError.Debt_Error_InvalidAccountHolder);
+                
             if (debt.IsSettled())
                 return Result.Error(BankChallengeError.Debt_Validation_IsSettled);
 
@@ -239,9 +243,63 @@ public class AccountService(
 
             await uowSession.CommitTransactionAsync();
 
-            return Result.Success(financialTransaction.Type is FinancialTransactionType.FulfillDebt
-                ? BankChallengeMessage.FulfillDebt_Success
+            return Result.Success(financialTransaction.Type is FinancialTransactionType.PayOffDebt
+                ? BankChallengeMessage.PayOffDebt_Success
                 : BankChallengeMessage.PartiallyPayDebt_Success);
+        }
+        catch (Exception ex)
+        {
+            await uowSession.AbortTransactionAsync();
+            return Result.Error(BankChallengeError.Application_Error_General, ex);
+        }
+    }
+
+    public async Task<ActionResult> RequestLoan(LoanRequestDto request, string accountHolderId)
+    {
+        using var uowSession = await unitOfWork.StartSessionAsync();
+
+        uowSession.StartTransaction();
+
+        try
+        {
+            var requestValidation = await new LoanRequestDtoValidator().ValidateAsync(request);
+
+            if (!requestValidation.IsValid)
+                return Result.Error(
+                    BankChallengeError.Application_Error_InvalidRequest,
+                    requestValidation.Errors);
+
+            var (account, accountValidationError) =
+                await FindOriginAccountByNumber(request.AccountNumber, accountHolderId);
+
+            if (accountValidationError is not null)
+                return Result.Error(accountValidationError);
+            
+            var debt = await debtRepository.FindByTypeAndAccountHolderId(DebtType.Loan, accountHolderId);
+            
+            if (debt is not null)
+                Result.Error(BankChallengeError.RequestLoan_Validation_Limit);
+
+            debt = new DebtEntity(request, account);
+            await debtRepository.InsertOneAsync(debt);
+            
+            var financialTransaction = new FinancialTransactionEntity(
+                accountId: debt.AccountHolderId,
+                amount: debt.CurrentAmountToPay,
+                category: FinancialTransactionCategory.Income,
+                type: FinancialTransactionType.LoanDeposit);
+            
+            await financialTransactionRepository.InsertOneAsync(financialTransaction);
+            
+            account.ExecuteFinancialTransaction(financialTransaction);
+            await accountRepository.UpdateOneAsync(account);
+            
+            financialTransaction.SetCompleted();
+            await financialTransactionRepository.UpdateOneAsync(financialTransaction);
+            
+            await uowSession.CommitTransactionAsync();
+            
+            return Result.Success(BankChallengeMessage.Transaction_Success);
         }
         catch (Exception ex)
         {

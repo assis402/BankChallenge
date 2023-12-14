@@ -32,7 +32,6 @@ public class IdentityController(IAccountHolderService accountHolderService) : Ba
     /// </code>
     /// </remarks>
     /// <param name="signInDto">DTO de requisição para login.</param>
-    [HttpPost("signIn")]
     [SwaggerResponse((int)HttpStatusCode.BadRequest)]
     [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
     [SwaggerResponse((int)HttpStatusCode.NotFound)]

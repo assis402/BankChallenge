@@ -28,7 +28,7 @@ public class AccountController(IAccountService accountService) : BankChallengeCo
     /// <code>
     /// {
     ///    "success": true,
-    ///    "message": "Transação realizada com sucesso.",
+    ///    "message": "Operação realizada com sucesso..",
     ///    "statusCode": 200
     /// }
     /// </code>
@@ -57,7 +57,7 @@ public class AccountController(IAccountService accountService) : BankChallengeCo
     /// <code>
     /// {
     ///    "success": true,
-    ///    "message": "Transação realizada com sucesso.",
+    ///    "message": "Operação realizada com sucesso..",
     ///    "statusCode": 200
     /// }
     /// </code>
@@ -87,7 +87,7 @@ public class AccountController(IAccountService accountService) : BankChallengeCo
     /// <code>
     ///     {
     ///        "success": true,
-    ///        "message": "Transferência realizada com sucesso.",
+    ///        "message": "Operação realizada com sucesso..",
     ///        "statusCode": 200
     ///     }
     /// </code>
@@ -100,6 +100,29 @@ public class AccountController(IAccountService accountService) : BankChallengeCo
     public async Task<ActionResult> TedInTransfer(TedInTransferRequestDto request)
         => await accountService.TedInTransfer(request, AccountHolderId);
     
+    /// <summary>
+    /// Solicita um empréstimo.
+    /// </summary>
+    /// <remarks>
+    /// Exemplo de requisição:
+    /// <code>
+    /// {
+    ///    "accountNumber": "123456-0",
+    ///    "amount": 1000.00,
+    ///    "paymentDate": "2023-12-31"
+    /// }
+    /// </code>
+    /// 
+    /// Exemplo de resposta:
+    /// <code>
+    /// {
+    ///    "success": true,
+    ///    "message": "Operação realizada com sucesso.",
+    ///    "statusCode": 200
+    /// }
+    /// </code>
+    /// </remarks>
+    /// <param name="request">DTO de requisição para solicitar um empréstimo.</param>
     [SwaggerResponse((int)HttpStatusCode.BadRequest)]
     [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
     [SwaggerResponse((int)HttpStatusCode.NotFound)]
@@ -108,7 +131,7 @@ public class AccountController(IAccountService accountService) : BankChallengeCo
         => await accountService.RequestLoan(request, AccountHolderId);
     
     /// <summary>
-    /// Quita uma dívida bancária.
+    /// Quita uma dívida bancária (ex: Empréstimo).
     /// </summary>
     /// <remarks>
     /// Exemplo de requisição:
@@ -133,7 +156,7 @@ public class AccountController(IAccountService accountService) : BankChallengeCo
     [SwaggerResponse((int)HttpStatusCode.BadRequest)]
     [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
     [SwaggerResponse((int)HttpStatusCode.NotFound)]
-    [HttpPost("fulfillDebt")]
-    public async Task<ActionResult> FulfillDebt(FulfillDebtRequestDto request)
-        => await accountService.FulfillDebt(request, AccountHolderId);
+    [HttpPost("payOffDebt")]
+    public async Task<ActionResult> PayOffDebt(PayOffDebtRequestDto request)
+        => await accountService.PayOffDebt(request, AccountHolderId);
 }

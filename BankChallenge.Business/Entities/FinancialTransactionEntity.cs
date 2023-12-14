@@ -8,9 +8,9 @@ namespace BankChallenge.Business.Entities;
 [CollectionName("financialTransaction")]
 public class FinancialTransactionEntity : BaseEntity
 {
-    public FinancialTransactionEntity(FulfillDebtRequestDto request, DebtEntity debtEntity)
+    public FinancialTransactionEntity(PayOffDebtRequestDto request, DebtEntity debtEntity)
     {
-        AccountId = request.AccountNumber;
+        AccountId = debtEntity.AccountHolderId;
         Amount = request.Amount;
         Category = FinancialTransactionCategory.Outcome;
         Type = debtEntity.GetFinancialTransactionTypeByRequest(request);
@@ -26,15 +26,15 @@ public class FinancialTransactionEntity : BaseEntity
         Status = FinancialTransactionStatus.Pending;
     }
 
-    public string AccountId { get; set; }
+    public string AccountId { get; private set; }
     
-    public decimal Amount { get; set; }
+    public decimal Amount { get; private set; }
     
-    public FinancialTransactionType Type { get; set; }
+    public FinancialTransactionType Type { get; private set; }
     
-    public FinancialTransactionStatus Status { get; set; }
+    public FinancialTransactionStatus Status { get; private set; }
     
-    public FinancialTransactionCategory Category { get; set; }
+    public FinancialTransactionCategory Category { get; private set; }
     
     public void SetCompleted() => Status = FinancialTransactionStatus.Completed;
 

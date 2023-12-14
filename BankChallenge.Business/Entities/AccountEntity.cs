@@ -26,15 +26,15 @@ public class AccountEntity : BaseEntity
 
     public string AccountAgency = "0001"; // Por ser um banco digital, possui apenas uma agência
     
-    public string AccountNumber { get; set; }
+    public string AccountNumber { get; private set; }
     
-    public string AccountHolderId { get; set; }
+    public string AccountHolderId { get; private set; }
     
-    public decimal Balance { get; set; }
+    public decimal Balance { get; private set; }
     
-    public AccountType Type { get; set; }
+    public AccountType Type { get; private set; }
     
-    public AccountStatus Status { get; set; }
+    public AccountStatus Status { get; private set; }
 
     public bool IsActive() => Status == AccountStatus.Active;
 

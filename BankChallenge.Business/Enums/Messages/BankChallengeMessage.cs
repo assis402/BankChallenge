@@ -17,7 +17,7 @@ public enum BankChallengeMessage
     SignUp_Success,
 
     #endregion
-
+    
     #region Debt
 
     [StatusCode(HttpStatusCode.OK)] 
@@ -26,7 +26,7 @@ public enum BankChallengeMessage
     
     [StatusCode(HttpStatusCode.OK)] 
     [Description("Pagamento total da dívida realizado com sucesso.")]
-    FulfillDebt_Success,
+    PayOffDebt_Success,
 
     #endregion
 

@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace BankChallenge.Business.Validators.Account;
 
-public class FulfillDebtRequestDtoValidator : BaseTransactionRequestDtoValidator<FulfillDebtRequestDto>
+public class PayOffDebtRequestDtoValidator : BaseTransactionRequestDtoValidator<PayOffDebtRequestDto>
 {
-    public FulfillDebtRequestDtoValidator()
+    public PayOffDebtRequestDtoValidator()
     {
         RuleFor(x => x.DebtId)
             .NotEmpty();

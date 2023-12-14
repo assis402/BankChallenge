@@ -9,5 +9,6 @@ public enum FinancialTransactionType
     Pix,
     TedIn, 
     PartiallyPayDebt,
-    FulfillDebt
+    PayOffDebt,
+    LoanDeposit
 }

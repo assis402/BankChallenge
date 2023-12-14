@@ -82,6 +82,10 @@ public enum BankChallengeError
     [Description("O débito bancário está com o prazo de pagamento vencido. Realize uma nova negociação junto ao banco para quitar sua dívida.")]
     Debt_Validation_IsOverdue,
     
+    [StatusCode(HttpStatusCode.Forbidden)] 
+    [Description("O débito bancário informado não pertence ao titular desta conta.")]
+    Debt_Error_InvalidAccountHolder,
+    
     [Description("O valor para realizar a operação precisa ser maior que zero.")]
     Transaction_Validation_InsufficientAmount,
     
@@ -96,5 +100,4 @@ public enum BankChallengeError
     [Description("Não é permitido solicitar um novo empréstimo enquanto o empréstimo ativo não for quitado.")]
     RequestLoan_Validation_Limit
     #endregion
-
 }
