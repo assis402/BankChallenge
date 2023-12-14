@@ -22,7 +22,7 @@ public class AccountService(
     {
         var checkingAccount = new AccountEntity(accountHolderId);
         bool existsAccountWithSameNumber;
-        
+
         do
         {
             checkingAccount.GenerateAccountNumber();
@@ -68,7 +68,7 @@ public class AccountService(
                 return Result.Error(BankChallengeError.Account_Validation_InsufficientBalance);
 
             var financialTransaction = await GenerateWithdrawFinancialTransaction(request, account.Id.ToString());
-            
+
             account.ExecuteFinancialTransaction(financialTransaction);
             await accountRepository.UpdateOneAsync(account);
 
@@ -85,7 +85,7 @@ public class AccountService(
             return Result.Error(BankChallengeError.Application_Error_General, ex);
         }
     }
-    
+
     public async Task<ApiResult> Deposit(BaseTransactionRequestDto request, string accountHolderId)
     {
         using var uowSession = await unitOfWork.StartSessionAsync();
@@ -107,7 +107,7 @@ public class AccountService(
                 return Result.Error(accountValidationError);
 
             await Deposit(request.Amount, account);
-            
+
             await uowSession.CommitTransactionAsync();
 
             return Result.Success(BankChallengeMessage.Transaction_Success);
@@ -122,7 +122,7 @@ public class AccountService(
     public async Task Deposit(decimal amount, AccountEntity account)
     {
         var financialTransaction = await GenerateDepositFinancialTransactions(account.Id.ToString(), amount);
-        
+
         account.ExecuteFinancialTransaction(financialTransaction);
         await accountRepository.UpdateOneAsync(account);
 
@@ -207,10 +207,10 @@ public class AccountService(
 
             if (debt is null)
                 return Result.Error(BankChallengeError.Debt_Error_NonExists);
-            
+
             if (!debt.AccountHolderId.Equals(accountHolderId))
                 return Result.Error(BankChallengeError.Debt_Error_InvalidAccountHolder);
-                
+
             if (debt.IsSettled())
                 return Result.Error(BankChallengeError.Debt_Validation_IsSettled);
 
@@ -274,31 +274,31 @@ public class AccountService(
 
             if (accountValidationError is not null)
                 return Result.Error(accountValidationError);
-            
+
             var debt = await debtRepository.FindByTypeAndAccountHolderId(DebtType.Loan, accountHolderId);
-            
+
             if (debt is not null)
                 Result.Error(BankChallengeError.RequestLoan_Validation_Limit);
 
             debt = new DebtEntity(request, account);
             await debtRepository.InsertOneAsync(debt);
-            
+
             var financialTransaction = new FinancialTransactionEntity(
                 accountId: debt.AccountHolderId,
                 amount: debt.CurrentAmountToPay,
                 category: FinancialTransactionCategory.Income,
                 type: FinancialTransactionType.LoanDeposit);
-            
+
             await financialTransactionRepository.InsertOneAsync(financialTransaction);
-            
+
             account.ExecuteFinancialTransaction(financialTransaction);
             await accountRepository.UpdateOneAsync(account);
-            
+
             financialTransaction.SetCompleted();
             await financialTransactionRepository.UpdateOneAsync(financialTransaction);
-            
+
             await uowSession.CommitTransactionAsync();
-            
+
             return Result.Success(BankChallengeMessage.Transaction_Success);
         }
         catch (Exception ex)
@@ -317,7 +317,7 @@ public class AccountService(
 
         if (!account.IsActive())
             return (null, BankChallengeError.Account_Origin_Validation_Inactive);
-        
+
         if (!accountHolderId.Equals(account.AccountHolderId))
             return (null, BankChallengeError.Account_Error_ForbiddenOperation);
 
@@ -337,7 +337,7 @@ public class AccountService(
         return (account, null);
     }
 
-    private async Task<FinancialTransactionEntity> GenerateDepositFinancialTransactions(string accountId, decimal amount) 
+    private async Task<FinancialTransactionEntity> GenerateDepositFinancialTransactions(string accountId, decimal amount)
     {
         var financialTransaction = new FinancialTransactionEntity(
             accountId,
@@ -349,8 +349,8 @@ public class AccountService(
 
         return financialTransaction;
     }
-    
-    private async Task<FinancialTransactionEntity> GenerateWithdrawFinancialTransaction(BaseTransactionRequestDto request, string originAccountId) 
+
+    private async Task<FinancialTransactionEntity> GenerateWithdrawFinancialTransaction(BaseTransactionRequestDto request, string originAccountId)
     {
         var financialTransaction = new FinancialTransactionEntity(
             originAccountId,
@@ -364,8 +364,8 @@ public class AccountService(
     }
 
     private async Task<(FinancialTransactionEntity, FinancialTransactionEntity)> GenerateTedFinancialTransactions(
-        TedInTransferRequestDto request, 
-        AccountEntity fromAccount, 
+        TedInTransferRequestDto request,
+        AccountEntity fromAccount,
         AccountEntity toAccount)
     {
         var originFinancialTransaction = new FinancialTransactionEntity(
@@ -373,7 +373,7 @@ public class AccountService(
             request.Amount,
             FinancialTransactionType.TedIn,
             FinancialTransactionCategory.Outcome);
-            
+
         var destinationFinancialTransaction = new FinancialTransactionEntity(
             toAccount.Id.ToString(),
             request.Amount,
@@ -381,7 +381,7 @@ public class AccountService(
             FinancialTransactionCategory.Income);
 
         await financialTransactionRepository.InsertManyAsync(originFinancialTransaction, destinationFinancialTransaction);
-        
+
         return (originFinancialTransaction, destinationFinancialTransaction);
     }
 }

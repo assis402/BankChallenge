@@ -27,15 +27,15 @@ public class FinancialTransactionEntity : BaseEntity
     }
 
     public string AccountId { get; private set; }
-    
+
     public decimal Amount { get; private set; }
-    
+
     public FinancialTransactionType Type { get; private set; }
-    
+
     public FinancialTransactionStatus Status { get; private set; }
-    
+
     public FinancialTransactionCategory Category { get; private set; }
-    
+
     public void SetCompleted() => Status = FinancialTransactionStatus.Completed;
 
     public void SetInProcess() => Status = FinancialTransactionStatus.InProcess;

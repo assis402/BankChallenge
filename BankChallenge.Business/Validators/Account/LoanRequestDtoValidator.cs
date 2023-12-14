@@ -12,7 +12,7 @@ public class LoanRequestDtoValidator : BaseTransactionRequestDtoValidator<LoanRe
         RuleFor(x => x.Amount)
             .LessThan(10_000)
             .WithMessage(BankChallengeError.RequestLoan_Validation_InvalidAmount.Description());
-        
+
         RuleFor(x => x.PaymentDate)
             .NotEmpty()
             .Must(date => date > DateOnly.FromDateTime(DateTime.Now))

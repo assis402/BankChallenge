@@ -10,7 +10,7 @@ public static class CryptographyMd5
         var byteArray = MD5.HashData(Encoding.UTF8.GetBytes(toEncrypt));
         var stringBuilder = new StringBuilder();
 
-        foreach (var @byte in byteArray) 
+        foreach (var @byte in byteArray)
             stringBuilder.Append(@byte.ToString("x2"));
 
         return stringBuilder.ToString();

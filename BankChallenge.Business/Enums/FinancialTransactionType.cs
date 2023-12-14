@@ -7,7 +7,7 @@ public enum FinancialTransactionType
     Credit,
     Debit,
     Pix,
-    TedIn, 
+    TedIn,
     PartiallyPayDebt,
     PayOffDebt,
     LoanDeposit

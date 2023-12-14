@@ -15,7 +15,7 @@ public class FinancialTransactionRepository(BankChallengeContextDb context) : Ba
 
         await base.UpdateOneAsync(entity, updateDefinition);
     }
-    
+
     public async Task UpdateManyAsync(params FinancialTransactionEntity[] entityList)
     {
         foreach (var entity in entityList)

@@ -1,9 +1,14 @@
 using BankChallenge.API.Configurations;
 using BankChallenge.Infrasctructure.Helpers;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 DotEnvLoader.Load();
+
+var cultureInfo = new CultureInfo("pt-BR");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

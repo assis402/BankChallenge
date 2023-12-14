@@ -17,15 +17,15 @@ public class DebtRepository(BankChallengeContextDb context) : BaseRepository<Deb
 
         await base.UpdateOneAsync(entity, updateDefinition);
     }
-    
+
     public async Task<DebtEntity> FindByTypeAndAccountHolderId(DebtType type, string accountHolderId)
     {
         var filterDefinition = Builders<DebtEntity>.Filter
-            .Where(x => 
-                x.AccountHolderId.Equals(accountHolderId) && 
+            .Where(x =>
+                x.AccountHolderId.Equals(accountHolderId) &&
                 x.Type.Equals(type) &&
                 !x.Status.Equals(DebtStatus.Paid));
-    
-        return await FindOneAsync(filterDefinition); 
+
+        return await FindOneAsync(filterDefinition);
     }
 }

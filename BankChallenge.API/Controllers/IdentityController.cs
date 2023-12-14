@@ -1,8 +1,8 @@
-﻿using System.Net;
-using BankChallenge.Business.Interfaces.Services;
+﻿using BankChallenge.Business.Interfaces.Services;
 using BankChallenge.Shared.Dtos.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Net;
 
 namespace BankChallenge.API.Controllers;
 
@@ -21,7 +21,7 @@ public class IdentityController(IAccountHolderService accountHolderService) : Ba
     ///    "password": "senha123@"
     /// }
     /// </code>
-    /// 
+    ///
     /// Exemplo de resposta:
     /// <code>
     /// {
@@ -37,7 +37,7 @@ public class IdentityController(IAccountHolderService accountHolderService) : Ba
     [SwaggerResponse((int)HttpStatusCode.NotFound)]
     [HttpPost("signIn")]
     public async Task<ActionResult> SignIn(SignInDto signInDto) => await accountHolderService.SignIn(signInDto);
-    
+
     /// <summary>
     /// Realiza o registro de um novo titular da conta.
     /// </summary>
@@ -54,18 +54,18 @@ public class IdentityController(IAccountHolderService accountHolderService) : Ba
     ///    "initialDeposit": 1000.00
     /// }
     /// </code>
-    /// 
+    ///
     /// Exemplo de resposta:
     /// <code>
     /// {
     ///    "success": true,
     ///    "message": "Cadastro no banco realizado e conta corrente criada com sucesso.",
     ///    "data": {
-    ///         "AccountNumber": "123456-0",
-    ///         "Balance": 5000.00,
-    ///         "Type": "CheckingAccount",
-    ///         "Status": "Active",
-    ///         "OpeningDate": "2022-01-15"
+    ///         "accountNumber": "123456-0",
+    ///         "balance": 5000.00,
+    ///         "type": "CheckingAccount",
+    ///         "status": "Active",
+    ///         "openingDate": "2022-01-15"
     ///     }
     ///    "statusCode": 200
     /// }

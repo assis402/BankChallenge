@@ -34,7 +34,7 @@ public class AccountHolderService(
 
             if (accountHolder.Status is AccountHolderStatus.Inactive)
                 return Result.Error(BankChallengeError.AccountHolder_Validation_Inactive);
-            
+
             var tokenInfo = tokenService.GenerateTokenInfo(accountHolder);
             var signInResponse = new SignInResponseDto(accountHolder, tokenInfo);
 
@@ -45,36 +45,36 @@ public class AccountHolderService(
             return Result.Error(BankChallengeError.Application_Error_General, ex);
         }
     }
-    
+
     public async Task<ApiResult> SignUp(SignUpDto request)
     {
         using var uowSession = await unitOfWork.StartSessionAsync();
 
         uowSession.StartTransaction();
-        
+
         try
         {
             var validation = await new SignUpDtoValidator().ValidateAsync(request);
-            
+
             if (!validation.IsValid)
                 return Result.Error(
                     BankChallengeError.Application_Error_InvalidRequest,
                     validation.Errors);
-            
+
             var exists = await accountHolderRepository.Exists(request);
-            
+
             if (exists)
                 return Result.Error(BankChallengeError.SignUp_Error_AccountHolderAlreadyExists);
-            
+
             var accountHolder = new AccountHolderEntity(request);
             await accountHolderRepository.InsertOneAsync(accountHolder);
             var account = await accountService.CreateCheckingAccount(accountHolder.Id.ToString());
-            
+
             if (request.InitialDeposit > 0)
                 await accountService.Deposit(request.InitialDeposit, account);
-            
+
             await uowSession.CommitTransactionAsync();
-            
+
             return Result.Success(BankChallengeMessage.SignUp_Success, (AccountDto)account);
         }
         catch (Exception ex)

@@ -1,5 +1,5 @@
-﻿using System.Reflection;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace BankChallenge.API.Configurations;
 
@@ -39,10 +39,10 @@ public static class SwaggerConfiguration
                     Array.Empty<string>()
                 }
             });
-            
+
             var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-            
+
             option.IncludeXmlComments(xmlPath);
         });
     }

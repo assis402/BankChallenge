@@ -6,7 +6,7 @@ public static class ValidatorUtils
 {
     public static IRuleBuilderOptions<T, string> ValidCpf<T>(this IRuleBuilder<T, string> ruleBuilder)
         => ruleBuilder.Must(cpf => cpf.IsValidCpf());
-    
+
     public static IRuleBuilderOptions<T, string> ValidEnum<T, TEnum>(this IRuleBuilder<T, string> ruleBuilder)
         where TEnum : Enum =>
         ruleBuilder.Must(stringEnum =>

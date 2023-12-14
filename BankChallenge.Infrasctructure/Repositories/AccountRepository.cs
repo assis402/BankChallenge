@@ -12,8 +12,8 @@ public class AccountRepository(BankChallengeContextDb context) : BaseRepository<
     {
         var filterDefinition = Builders<AccountEntity>.Filter
             .Eq("accountNumber", accountNumber);
-        
-        return await FindOneAsync(filterDefinition); 
+
+        return await FindOneAsync(filterDefinition);
     }
 
     public async Task<IEnumerable<AccountEntity>> FindManyByAccountHolderId(string accountHolderId)
@@ -23,7 +23,7 @@ public class AccountRepository(BankChallengeContextDb context) : BaseRepository<
 
         return await FindAsync(filterDefinition);
     }
-    
+
     public async Task UpdateOneAsync(AccountEntity entity)
     {
         var updateDefinition = Builders<AccountEntity>.Update
@@ -31,7 +31,7 @@ public class AccountRepository(BankChallengeContextDb context) : BaseRepository<
 
         await UpdateOneAsync(entity, updateDefinition);
     }
-    
+
     public async Task UpdateManyAsync(params AccountEntity[] entityList)
     {
         foreach (var entity in entityList)
@@ -42,7 +42,7 @@ public class AccountRepository(BankChallengeContextDb context) : BaseRepository<
             await base.UpdateOneAsync(entity, updateDefinition);
         }
     }
-    
+
     public async Task<bool> Exists(string accountNumber)
     {
         var filter = Builders<AccountEntity>.Filter.Eq("accountNumber", accountNumber);
