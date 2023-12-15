@@ -6,19 +6,19 @@ Este tutorial aborda como realizar testes na aplicação, focando nos métodos d
 
 ### Contas para Teste
 1. **Titular: José da Silva**
-   - CPF: 94064810066
-   - Senha: Senha123@
-   - Número da Conta: 04778-0
+   - **CPF**: 94064810066
+   - **Senha**: Senha123@
+   - **Número da Conta**: 04778-0
 
 2. **Titular: Matheus de Assis**
-   - CPF: 52681717043
-   - Senha: Senha123@
-   - Número da Conta: 05949-0
+   - **CPF**: 52681717043
+   - **Senha**: Senha123@
+   - **Número da Conta**: 05949-0
 
 3. **Titular: Levi Davi Rezende**
-   - CPF: 20346941121
-   - Senha: Senha123@
-   - Número da Conta: 02444-0
+   - **CPF**: 20346941121
+   - **Senha**: Senha123@
+   - **Número da Conta**: 02444-0
   
 ### Observações
 - Lembre-se de ajustar os dados nas requisições conforme necessário e utilizar as informações das contas fornecidas para validar os resultados dos testes.
