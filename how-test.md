@@ -27,7 +27,7 @@ Este tutorial aborda como realizar testes na aplicação, focando nos métodos d
 ## Fluxo de Teste
 
 - Exemplo de como realizar uma requisição pelo Swagger: 
-<img src="/.github/swagger.gif" height="70">
+<img src="/.github/swagger.gif">
 
 ### 1. SignUp
 #### POST: `/v1/identity/sigUn`
