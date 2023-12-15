@@ -16,6 +16,14 @@ public class AccountRepository(BankChallengeContextDb context) : BaseRepository<
         return await FindOneAsync(filterDefinition);
     }
 
+    public async Task<AccountEntity> FindByAccountNumber(string accountNumber, IClientSessionHandle session)
+    {
+        var filterDefinition = Builders<AccountEntity>.Filter
+            .Eq("accountNumber", accountNumber);
+
+        return await FindOneAsync(filterDefinition, session);
+    }
+
     public async Task<IEnumerable<AccountEntity>> FindManyByAccountHolderId(string accountHolderId)
     {
         var filterDefinition = Builders<AccountEntity>.Filter
@@ -24,28 +32,28 @@ public class AccountRepository(BankChallengeContextDb context) : BaseRepository<
         return await FindAsync(filterDefinition);
     }
 
-    public async Task UpdateOneAsync(AccountEntity entity)
+    public async Task UpdateOneAsync(AccountEntity entity, IClientSessionHandle session)
     {
         var updateDefinition = Builders<AccountEntity>.Update
             .Set(nameof(entity.Balance).FirstCharToLowerCase(), entity.Balance);
 
-        await UpdateOneAsync(entity, updateDefinition);
+        await UpdateOneAsync(entity, updateDefinition, session);
     }
 
-    public async Task UpdateManyAsync(params AccountEntity[] entityList)
+    public async Task UpdateManyAsync(IClientSessionHandle session, params AccountEntity[] entityList)
     {
         foreach (var entity in entityList)
         {
             var updateDefinition = Builders<AccountEntity>.Update
                 .Set(nameof(entity.Balance).FirstCharToLowerCase(), entity.Balance);
 
-            await base.UpdateOneAsync(entity, updateDefinition);
+            await base.UpdateOneAsync(entity, updateDefinition, session);
         }
     }
 
-    public async Task<bool> Exists(string accountNumber)
+    public async Task<bool> Exists(string accountNumber, IClientSessionHandle session)
     {
         var filter = Builders<AccountEntity>.Filter.Eq("accountNumber", accountNumber);
-        return await Exists(filter);
+        return await Exists(filter, session);
     }
 }

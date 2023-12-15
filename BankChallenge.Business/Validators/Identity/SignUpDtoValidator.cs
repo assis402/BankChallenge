@@ -10,9 +10,6 @@ public class SignUpDtoValidator : AbstractValidator<SignUpDto>
 {
     public SignUpDtoValidator()
     {
-        RuleFor(x => x)
-            .NotEmpty();
-
         RuleFor(x => x.Name)
             .NotEmpty();
 
@@ -37,11 +34,13 @@ public class SignUpDtoValidator : AbstractValidator<SignUpDto>
         RuleFor(x => x.Password)
             .NotEmpty()
             .MinimumLength(8)
-            .WithMessage(BankChallengeError.SignUp_Validation_InvalidPasswordRules.Description())
-            .Matches("[A-Z]")
-            .Matches("[a-z]")
-            .Matches("[0-9]")
-            .Matches("[^a-zA-Z0-9]");
+            .Matches(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])")
+            .WithMessage(BankChallengeError.SignUp_Validation_InvalidPasswordRules.Description());
+
+        RuleFor(x => x.InitialDeposit)
+            .Must(x => x <= 100_000)
+            .When(x => x.InitialDeposit > 0)
+            .WithMessage(BankChallengeError.SignUp_Validation_InvalidInitialDeposit.Description());
     }
 
     private static bool BeOver18YearsOld(DateOnly birthdate)

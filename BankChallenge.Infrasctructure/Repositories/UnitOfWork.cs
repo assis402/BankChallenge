@@ -16,5 +16,5 @@ public class UnitOfWork : IUnitOfWork
         return _session;
     }
 
-    public void Dispose() => _session.Dispose();
+    public void Dispose() => _session?.Dispose();
 }

@@ -1,5 +1,5 @@
 ﻿using BankChallenge.Business.Enums;
-using BankChallenge.Shared.Dtos.Account;
+using BankChallenge.Shared.Dtos.FinancialTransaction;
 using Matsoft.MongoDB;
 using Matsoft.MongoDB.CustomAttributes;
 
@@ -8,38 +8,55 @@ namespace BankChallenge.Business.Entities;
 [CollectionName("debt")]
 public class DebtEntity : BaseEntity
 {
+    public DebtEntity()
+    {
+    }
+
     public DebtEntity(LoanRequestDto request, AccountEntity accountEntity)
     {
         RequestedLoanAmount = OriginalAmountToPay = CurrentAmountToPay = request.Amount;
-        AccountHolderId = accountEntity.AccountHolderId;
-        DueDate = request.PaymentDate;
+        AccountId = accountEntity.Id.ToString();
+        DueDate = DateOnly.FromDateTime(DateTime.Today.AddMonths(1));
         Status = DebtStatus.Pending;
         Type = DebtType.Loan;
 
         ApplyLoanInterest();
     }
 
-    public string AccountHolderId { get; private set; }
+    public static implicit operator DebtDto(DebtEntity entity)
+        => new(entity.Id.ToString(),
+            entity.RequestedLoanAmount,
+            entity.OriginalAmountToPay,
+            entity.CurrentAmountToPay,
+            entity.DueDate,
+            entity.Status.ToString(),
+            entity.Type.ToString());
 
-    public decimal OriginalAmountToPay { get; private set; }
+    public string AccountId { get; set; }
 
-    public decimal CurrentAmountToPay { get; private set; }
+    public decimal OriginalAmountToPay { get; set; }
 
-    public decimal? RequestedLoanAmount { get; private set; }
+    public decimal CurrentAmountToPay { get; set; }
 
-    public DateOnly DueDate { get; private set; }
+    public decimal RequestedLoanAmount { get; set; }
 
-    public DebtStatus Status { get; private set; }
+    public DateOnly DueDate { get; set; }
 
-    public DebtType Type { get; private set; }
+    public DebtStatus Status { get; set; }
+
+    public DebtType Type { get; set; }
 
     public bool IsOverdue() => DateOnly.FromDateTime(DateTime.Now) >= DueDate;
 
     public bool IsSettled() => Status is DebtStatus.Paid;
 
+    /// <summary>
+    /// Este método é uma representação simplificada de aplicação de juros em um empréstimo.
+    /// </summary>
     private void ApplyLoanInterest()
     {
-        const decimal interestRate = 5.0M; // Taxa de juros de 5% apenas de exemplo
+        const decimal interestRate = 5.00M; // Taxa de juros de 5% apenas como exemplo
+
         var interestAmount = OriginalAmountToPay * (interestRate / 100);
 
         OriginalAmountToPay += interestAmount;

@@ -33,7 +33,7 @@ public enum BankChallengeMessage
     #region Transaction
 
     [StatusCode(HttpStatusCode.OK)]
-    [Description("Transação realizada com sucesso.")]
+    [Description("Operação realizada com sucesso.")]
     Transaction_Success
 
     #endregion Transaction

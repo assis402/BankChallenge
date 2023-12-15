@@ -1,5 +1,5 @@
 ﻿using BankChallenge.Business.Enums;
-using BankChallenge.Shared.Dtos.Account;
+using BankChallenge.Shared.Dtos.FinancialTransaction;
 using Matsoft.MongoDB;
 using Matsoft.MongoDB.CustomAttributes;
 
@@ -10,14 +10,15 @@ public class FinancialTransactionEntity : BaseEntity
 {
     public FinancialTransactionEntity(PayOffDebtRequestDto request, DebtEntity debtEntity)
     {
-        AccountId = debtEntity.AccountHolderId;
+        AccountId = debtEntity.AccountId;
         Amount = request.Amount;
         Category = FinancialTransactionCategory.Outcome;
         Type = debtEntity.GetFinancialTransactionTypeByRequest(request);
         Status = FinancialTransactionStatus.Pending;
     }
 
-    public FinancialTransactionEntity(string accountId, decimal amount, FinancialTransactionType type, FinancialTransactionCategory category)
+    public FinancialTransactionEntity(string accountId, decimal amount, FinancialTransactionType type,
+        FinancialTransactionCategory category)
     {
         AccountId = accountId;
         Amount = amount;
@@ -25,6 +26,14 @@ public class FinancialTransactionEntity : BaseEntity
         Category = category;
         Status = FinancialTransactionStatus.Pending;
     }
+
+    public static implicit operator FinancialTransactionDto(FinancialTransactionEntity entity)
+        => new(entity.Id.ToString(),
+            entity.AccountId,
+            entity.Amount,
+            entity.Type.ToString(),
+            entity.Status.ToString(),
+            entity.Category.ToString());
 
     public string AccountId { get; private set; }
 

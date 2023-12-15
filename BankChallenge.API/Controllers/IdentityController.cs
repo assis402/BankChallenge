@@ -18,7 +18,7 @@ public class IdentityController(IAccountHolderService accountHolderService) : Ba
     /// <code>
     /// {
     ///    "cpf": "12345678901",
-    ///    "password": "senha123@"
+    ///    "password": "Senha123@"
     /// }
     /// </code>
     ///
@@ -46,7 +46,7 @@ public class IdentityController(IAccountHolderService accountHolderService) : Ba
     /// <code>
     /// {
     ///    "email": "joao@email.com",
-    ///    "password": "senha123@",
+    ///    "password": "Senha123@",
     ///    "cpf": "12345678901",
     ///    "name": "João Silva",
     ///    "birthdate": "1990-01-01",

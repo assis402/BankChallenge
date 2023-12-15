@@ -1,9 +1,9 @@
 ﻿using BankChallenge.Business.Enums.Messages;
-using BankChallenge.Shared.Dtos.Account;
+using BankChallenge.Shared.Dtos.FinancialTransaction;
 using FluentValidation;
 using Matsoft.ApiResults.Helpers;
 
-namespace BankChallenge.Business.Validators.Account;
+namespace BankChallenge.Business.Validators.FinancialTransaction;
 
 public class BaseTransactionRequestDtoValidator<TRequest> : AbstractValidator<TRequest> where TRequest : BaseTransactionRequestDto
 {

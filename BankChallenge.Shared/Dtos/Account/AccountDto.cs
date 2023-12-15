@@ -1,6 +1,6 @@
 ﻿namespace BankChallenge.Shared.Dtos.Account;
 
-public record struct AccountDto(
+public record AccountDto(
     string AccountAgency,
     string AccountNumber,
     decimal Balance,

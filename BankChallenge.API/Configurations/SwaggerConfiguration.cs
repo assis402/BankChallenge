@@ -14,7 +14,13 @@ public static class SwaggerConfiguration
             {
                 Title = "BankChallenge.API",
                 Description = "API em .NET 8 que simula algumas funcionalidades de um banco digital.",
-                Version = "v1"
+                Version = "v1",
+                Contact = new OpenApiContact
+                {
+                    Name = "Matheus de Assis Alcântara",
+                    Url = new Uri("https://www.matheusassis.dev"),
+                    Email = "contato@matheusassis.dev"
+                }
             });
             option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {

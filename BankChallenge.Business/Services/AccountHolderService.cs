@@ -15,6 +15,7 @@ public class AccountHolderService(
         IUnitOfWork unitOfWork,
         IAccountHolderRepository accountHolderRepository,
         IAccountService accountService,
+        IFinancialTransactionService financialTransactionService,
         ITokenService tokenService) : IAccountHolderService
 {
     public async Task<ApiResult> SignIn(SignInDto signInDto)
@@ -61,17 +62,17 @@ public class AccountHolderService(
                     BankChallengeError.Application_Error_InvalidRequest,
                     validation.Errors);
 
-            var exists = await accountHolderRepository.Exists(request);
+            var exists = await accountHolderRepository.Exists(request, uowSession);
 
             if (exists)
                 return Result.Error(BankChallengeError.SignUp_Error_AccountHolderAlreadyExists);
 
             var accountHolder = new AccountHolderEntity(request);
-            await accountHolderRepository.InsertOneAsync(accountHolder);
-            var account = await accountService.CreateCheckingAccount(accountHolder.Id.ToString());
+            await accountHolderRepository.InsertOneAsync(accountHolder, uowSession);
+            var account = await accountService.CreateCheckingAccount(accountHolder.Id.ToString(), uowSession);
 
             if (request.InitialDeposit > 0)
-                await accountService.Deposit(request.InitialDeposit, account);
+                await financialTransactionService.Deposit(request.InitialDeposit, account, uowSession);
 
             await uowSession.CommitTransactionAsync();
 

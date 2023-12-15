@@ -1,7 +1,7 @@
-﻿using BankChallenge.Shared.Dtos.Account;
+﻿using BankChallenge.Shared.Dtos.FinancialTransaction;
 using FluentValidation;
 
-namespace BankChallenge.Business.Validators.Account;
+namespace BankChallenge.Business.Validators.FinancialTransaction;
 
 public class TedTransferRequestDtoValidator : BaseTransactionRequestDtoValidator<TedInTransferRequestDto>
 {

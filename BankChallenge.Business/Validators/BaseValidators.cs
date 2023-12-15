@@ -1,5 +1,5 @@
-﻿using BankChallenge.Business.Validators.Account;
-using BankChallenge.Shared.Dtos.Account;
+﻿using BankChallenge.Business.Validators.FinancialTransaction;
+using BankChallenge.Shared.Dtos.FinancialTransaction;
 
 namespace BankChallenge.Business.Validators;
 

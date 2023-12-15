@@ -32,7 +32,7 @@ public enum BankChallengeError
     [Description("Já existe o cadastro de um titular com os dados informados. Cada conta possui CPF e E-mail únicos.")]
     SignUp_Error_AccountHolderAlreadyExists,
 
-    [Description("Senha informada não preenche os requisitos solicitados.")]
+    [Description("Senha informada não preenche os requisitos solicitados: Pelo menos uma letra maiúscula, uma letra minúscula, um dígito e um caractere especial.")]
     SignUp_Validation_InvalidPasswordRules,
 
     [Description("'Email' está inválido.")]
@@ -40,6 +40,9 @@ public enum BankChallengeError
 
     [Description("O titular da conta deve ter mais de 18 anos.")]
     SignUp_Validation_InvalidAge,
+
+    [Description("A valor máximo atual do depósito inicial é de R$ 100.000,00.")]
+    SignUp_Validation_InvalidInitialDeposit,
 
     #endregion Identity
 
@@ -73,6 +76,9 @@ public enum BankChallengeError
     [Description("O seu saldo é insuficiente para esta transação.")]
     Account_Validation_InsufficientBalance,
 
+    [Description("É necessário informar o Id da conta.")]
+    Account_Validation_AccountIdIsRequired,
+
     [StatusCode(HttpStatusCode.NotFound)]
     [Description("O débito bancário informado não foi encontrado.")]
     Debt_Error_NonExists,
@@ -89,9 +95,6 @@ public enum BankChallengeError
 
     [Description("O valor para realizar a operação precisa ser maior que zero.")]
     Transaction_Validation_InsufficientAmount,
-
-    [Description("A data de pagamento do emprestimo precisa ser maior que a data de hoje.")]
-    RequestLoan_Validation_InvalidPaymentDate,
 
     // Foi estabelecido um limite máximo para empréstimos com o propósito de simplificar a realização de testes
     [Description("A valor máximo atual de empréstimos é de R$ 20.000,00.")]

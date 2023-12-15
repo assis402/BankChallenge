@@ -4,7 +4,8 @@ using Matsoft.MongoDB;
 
 namespace BankChallenge.Infrasctructure;
 
-public class BankChallengeContextDb() : BaseContextDb(Settings.ConnectionString, Settings.Database)
+public class BankChallengeContextDb(bool isTestProject = false)
+    : BaseContextDb(Settings.ConnectionString, Settings.Database, isTestProject)
 {
     protected override void MapClasses()
     {

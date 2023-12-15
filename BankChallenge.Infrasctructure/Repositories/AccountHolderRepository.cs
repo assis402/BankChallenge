@@ -17,12 +17,12 @@ public class AccountHolderRepository(BankChallengeContextDb context) : BaseRepos
         return await FindOneAsync(filter);
     }
 
-    public async Task<bool> Exists(SignUpDto request)
+    public async Task<bool> Exists(SignUpDto request, IClientSessionHandle session)
     {
         var filter = Builders<AccountHolderEntity>.Filter.Where(x =>
             x.Cpf.Equals(request.Cpf) ||
             x.Email.Equals(request.Email));
 
-        return await Exists(filter);
+        return await Exists(filter, session);
     }
 }
