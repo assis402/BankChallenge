@@ -6,7 +6,7 @@ A **BankChallenge API** é uma aplicação em .NET 8 que simula funcionalidades 
 
 ## Como Testar via Swagger
 O projeto contém uma documentação própria gerada em Swagger, para facilitar os testes e auxiliar no entendimento de cada endpoint da API.
-- [Link do tutorial de teste](../how-test.md)
+- [Link do tutorial de teste](how-test.md)
 
 O Swagger é uma ferramenta de código aberto que simplifica o design, a documentação e o consumo de APIs REST, facilitando a comunicação entre desenvolvedores.
 
