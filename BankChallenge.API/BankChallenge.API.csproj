@@ -31,10 +31,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\TestController.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update=".env">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

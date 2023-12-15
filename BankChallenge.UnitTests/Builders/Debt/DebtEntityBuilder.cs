@@ -1,14 +1,8 @@
 ﻿using BankChallenge.Business.Entities;
 using BankChallenge.Business.Enums;
-using BankChallenge.UnitTests.Builders.Account;
 using Bogus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BankChallenge.UnitTests.Builders.FinancialTransaction;
+namespace BankChallenge.UnitTests.Builders.Debt;
 
 internal class DebtEntityBuilder : BaseBuilder<DebtEntity>
 {

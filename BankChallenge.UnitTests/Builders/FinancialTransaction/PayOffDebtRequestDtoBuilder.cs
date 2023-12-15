@@ -5,9 +5,6 @@ namespace BankChallenge.UnitTests.Builders.FinancialTransaction;
 
 internal class PayOffDebtRequestDtoBuilder : BaseBuilder<PayOffDebtRequestDto>
 {
-    public PayOffDebtRequestDtoBuilder()
-    { }
-
     public override PayOffDebtRequestDtoBuilder Default()
     {
         var faker = new Faker();

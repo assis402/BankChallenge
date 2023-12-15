@@ -1,8 +1,7 @@
 ﻿using BankChallenge.Business.Enums.Messages;
-using BankChallenge.Business.Services;
 using BankChallenge.UnitTests.Builders.Account;
+using BankChallenge.UnitTests.Builders.Debt;
 using BankChallenge.UnitTests.Builders.FinancialTransaction;
-using BankChallenge.UnitTests.Mocks.Repositories;
 using Matsoft.ApiResults.Helpers;
 
 namespace BankChallenge.UnitTests.Services;

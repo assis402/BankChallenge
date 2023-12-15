@@ -87,9 +87,6 @@ public class DebtEntity : BaseEntity
                 financialTransaction.SetCompleted();
                 success = true;
                 break;
-
-            default:
-                break;
         }
 
         return success;
