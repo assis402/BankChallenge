@@ -6,7 +6,7 @@ A **BankChallenge API** é uma aplicação em .NET 8 que simula funcionalidades 
 
 ## Como Testar via Swagger
 O projeto contém uma documentação própria gerada em Swagger, para facilitar os testes e auxiliar no entendimento de cada endpoint da API.
-[Link com Readme explicando como testar]()
+- [Link do tutorial de teste](how-test.md)
 
 O Swagger é uma ferramenta de código aberto que simplifica o design, a documentação e o consumo de APIs REST, facilitando a comunicação entre desenvolvedores.
 
@@ -14,18 +14,19 @@ O Swagger é uma ferramenta de código aberto que simplifica o design, a documen
 
 - C# 12
 - .NET 8 <br>
-```Versão mais recente da plataforma de desenvolvimento da Microsoft.```
+  - Versão mais recente da plataforma de desenvolvimento da Microsoft.
+- Autenticação com JWT
 - XUnit <br>
-```Framework de teste de unidade para linguagem C#.```
-```OBS: Para demonstrar proficiência em testes unitários, foram desenvolvidos nove casos de teste que abrangem os fluxos de três métodos na camada de serviço.```
+  - Framework de teste de unidade para linguagem C#.
 - MongoDB
 - Docker
 - Azure Container Apps <br>
-```Serviço da Microsoft Azure que permite implantar e gerenciar aplicativos em contêineres de maneira simplificada na nuvem.```
-
+  - Serviço da Microsoft Azure que permite implantar e gerenciar aplicativos em contêineres de maneira simplificada na nuvem.
+<br>
 <div>
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Logo_C_sharp.svg/1200px-Logo_C_sharp.svg.png" height="70">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Microsoft_.NET_logo.svg/2048px-Microsoft_.NET_logo.svg.png" height="70">
+    <img src="https://jwt.io/img/logo-asset.svg" height="70">
     <img src="https://media.licdn.com/dms/image/D4E12AQE4AmAdWfL3sQ/article-cover_image-shrink_600_2000/0/1695127505668?e=2147483647&v=beta&t=ziuXm_riVZkSTXxDED73oH62D_VLoupVaZKdeF9oTxQ" height="50">
     <img src="https://logowik.com/content/uploads/images/mongodb9740.logowik.com.webp" height="70">
     <img src="https://www.docker.com/wp-content/uploads/2023/08/logo-dont-reverse.svg" height="70">
@@ -35,30 +36,30 @@ O Swagger é uma ferramenta de código aberto que simplifica o design, a documen
 ## Estrutura do Projeto
 ```
 └── Solution
-    ├── BankChallenge.API     // Camada de apresentação
-    │   ├── Configurations    // Configurações da API, como injeção de dependência, swagger e etc
-    │   └── Controllers       // Classes dos Controladores
+    ├── BankChallenge.API              // Camada de apresentação
+    │   ├── Configurations             // Configurações da API, como injeção de dependência, swagger e etc
+    │   └── Controllers                // Classes dos Controladores
     │
-    ├── BankChallenge.Business    // Camada de regras de negócio
-    │   ├── Entities              // Entidades com suas respectivas lógicas de negócios
-    │   ├── Enums                 // Enumerações relacionadas a entidades e mensagens de erro e informação da API
-    │   ├── Helpers               // Classes utilitárias para a camada de negócios
-    │   ├── Interfaces            // Interfaces de serviços e repositórios
-    │   ├── Services              // Implementações dos serviços
-    │   └── Validators            // Fluent validations dos DTOs de request e response
+    ├── BankChallenge.Business         // Camada de regras de negócio
+    │   ├── Entities                   // Entidades com suas respectivas lógicas de negócios
+    │   ├── Enums                      // Enumerações relacionadas a entidades e mensagens de erro e informação da API
+    │   ├── Helpers                    // Classes utilitárias para a camada de negócios
+    │   ├── Interfaces                 // Interfaces de serviços e repositórios
+    │   ├── Services                   // Implementações dos serviços
+    │   └── Validators                 // Fluent validations dos DTOs de request e response
     │    
-    ├── BankChallenge.Infrastructure     // Camada de infraestrutura
-    │    ├── Helpers                     // Classes de utilidade para a camada de infraestrutura
-    │    └── Repositories                // Implementações dos repositórios
+    ├── BankChallenge.Infrastructure   // Camada de infraestrutura
+    │    ├── Helpers                   // Classes de utilidade para a camada de infraestrutura
+    │    └── Repositories              // Implementações dos repositórios
     │
-    │── BankChallenge.Shared     // Camada com classes genéricas e sem regras de negócios que são compartilhadas com os outros projetos
-    │    ├── Dtos                // Data Transfer Objects
-    │    └── Helpers             // Classes de utilitários genéricos para compartilhar com outras camadas
+    │── BankChallenge.Shared           // Camada com classes genéricas e sem regras de negócios que são compartilhadas com os outros projetos
+    │    ├── Dtos                      // Data Transfer Objects
+    │    └── Helpers                   // Classes de utilitários genéricos para compartilhar com outras camadas
     │
-    └── BankChallenge.UnitTests      // Camada de Testes unitários
-         ├── Builders                // Classes utilizando o padão Builder para constuir os Requests e os Mocks para os testes unitários 
-         ├── Mocks                   // Classes com Mocks de repositórios
-         └── Services                // Classes de Testes dos Serviços 
+    └── BankChallenge.UnitTests        // Camada de Testes unitários
+         ├── Builders                  // Classes utilizando o padão Builder para constuir os Requests e os Mocks para os testes unitários 
+         ├── Mocks                     // Classes com Mocks de repositórios
+         └── Services                  // Classes de Testes dos Serviços 
 ```
 
 ## Padrões de Design e Arquitetura
@@ -68,9 +69,14 @@ O Swagger é uma ferramenta de código aberto que simplifica o design, a documen
 - Repository
 - Builders
 - Mock <br>
-```Utilizado para construção de respostas simuladas de repositorio nos testes unitários```
+  - Utilizado para construção de respostas simuladas de repositorio nos testes unitários
 - Unit of Work <br>
-```Padrão de design que agrupa operações relacionadas a banco de dados em uma única transação, garantindo consistência e facilitando o controle sobre as alterações, especialmente quando associado ao padrão Repository.```
+  - Padrão de design que agrupa operações relacionadas a banco de dados em uma única transação, garantindo consistência e facilitando o controle sobre as alterações, especialmente quando associado ao padrão Repository
+
+## Execução de Testes Unitários
+Para demonstrar proficiência em testes unitários, foram desenvolvidos nove casos de teste que abrangem os fluxos de três métodos na camada de serviço.
+
+<img src="/.github/readme-imgs/unit-tests-img.png">
 
 ## Bibliotecas Externas
 
@@ -108,11 +114,3 @@ Construí estas duas bibliotecas durante este ano e venho utilizando em meus pro
 
 - **Link da API na Azure**: https://bankchallengeapi-app-20231215023.lemonocean-43d2f426.eastus2.azurecontainerapps.io
 - **Link do Swagger**: https://bankchallengeapi-app-20231215023.lemonocean-43d2f426.eastus2.azurecontainerapps.io/swagger/index.html
-
-## Como Testar via Swagger
-
-### Pré-requisitos
-
-- Certifique-se de ter o .NET 8 instalado em sua máquina.
-- Clone o repositório do projeto: `git clone https://github.com/assis402/BankChallenge.git`
-- Navegue até o diretório do projeto: `cd BankChallenge`

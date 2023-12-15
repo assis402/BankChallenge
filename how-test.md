@@ -1,118 +1,194 @@
-# BankChallenge API ![status](https://img.shields.io/static/v1?label=status&message=ready&color=blue)
+# Tutorial de Teste da Aplicação
 
-## Resumo do Projeto
+## Introdução
+Este tutorial aborda como realizar testes na aplicação, focando nos métodos de login e cadastro na camada de identidade. Utilize as contas existentes fornecidas para executar os testes.
+- [Acesse o Swagger da aplicação](https://bankchallengeapi-app-20231215023.lemonocean-43d2f426.eastus2.azurecontainerapps.io/swagger/index.html)
 
-A **BankChallenge API** é uma aplicação em .NET 8 que simula funcionalidades de um banco digital. A API permite realizar operações como abertura de contas, transações financeiras, solicitação de empréstimos e quitação de dívidas. O projeto é desenvolvido utilizando as tecnologias mais recentes, seguindo boas práticas de arquitetura e design.
+### Contas para Teste
+1. **Titular: José da Silva**
+   - **CPF**: 94064810066
+   - **Senha**: Senha123@
+   - **Número da Conta**: 04778-0
 
-## Como Testar via Swagger
-O projeto contém uma documentação própria gerada em Swagger, para facilitar os testes e auxiliar no entendimento de cada endpoint da API.
-[Link com Readme explicando como testar]()
+2. **Titular: Matheus de Assis**
+   - **CPF**: 52681717043
+   - **Senha**: Senha123@
+   - **Número da Conta**: 05949-0
 
-O Swagger é uma ferramenta de código aberto que simplifica o design, a documentação e o consumo de APIs REST, facilitando a comunicação entre desenvolvedores.
+3. **Titular: Levi Davi Rezende**
+   - **CPF**: 20346941121
+   - **Senha**: Senha123@
+   - **Número da Conta**: 02444-0
+  
+### Observações
+- Lembre-se de ajustar os dados nas requisições conforme necessário e utilizar as informações das contas fornecidas para validar os resultados dos testes.
+- Url base da API: https://bankchallengeapi-app-20231215023.lemonocean-43d2f426.eastus2.azurecontainerapps.io
 
-## Tecnologias Utilizadas
+## Fluxo de Teste
 
-- C# 12
-- .NET 8 <br>
-```Versão mais recente da plataforma de desenvolvimento da Microsoft.```
-- XUnit <br>
-```Framework de teste de unidade para linguagem C#.```
-```OBS: Para demonstrar proficiência em testes unitários, foram desenvolvidos nove casos de teste que abrangem os fluxos de três métodos na camada de serviço.```
-- MongoDB
-- Docker
-- Azure Container Apps <br>
-```Serviço da Microsoft Azure que permite implantar e gerenciar aplicativos em contêineres de maneira simplificada na nuvem.```
+- Exemplo de como realizar uma requisição pelo Swagger: 
+<img src="/.github/swagger.gif" height="70">
 
-<div>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Logo_C_sharp.svg/1200px-Logo_C_sharp.svg.png" height="70">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Microsoft_.NET_logo.svg/2048px-Microsoft_.NET_logo.svg.png" height="70">
-    <img src="https://media.licdn.com/dms/image/D4E12AQE4AmAdWfL3sQ/article-cover_image-shrink_600_2000/0/1695127505668?e=2147483647&v=beta&t=ziuXm_riVZkSTXxDED73oH62D_VLoupVaZKdeF9oTxQ" height="50">
-    <img src="https://logowik.com/content/uploads/images/mongodb9740.logowik.com.webp" height="70">
-    <img src="https://www.docker.com/wp-content/uploads/2023/08/logo-dont-reverse.svg" height="70">
-    <img src="https://ms-azuretools.gallerycdn.vsassets.io/extensions/ms-azuretools/vscode-azurecontainerapps/0.6.1/1699409688312/Microsoft.VisualStudio.Services.Icons.Default" height="70">
-</div>
+### 1. SignUp
+#### POST: `/v1/identity/sigUn`
 
-## Estrutura do Projeto
-```
-└── Solution
-    ├── BankChallenge.API     // Camada de apresentação
-    │   ├── Configurations    // Configurações da API, como injeção de dependência, swagger e etc
-    │   └── Controllers       // Classes dos Controladores
-    │
-    ├── BankChallenge.Business    // Camada de regras de negócio
-    │   ├── Entities              // Entidades com suas respectivas lógicas de negócios
-    │   ├── Enums                 // Enumerações relacionadas a entidades e mensagens de erro e informação da API
-    │   ├── Helpers               // Classes utilitárias para a camada de negócios
-    │   ├── Interfaces            // Interfaces de serviços e repositórios
-    │   ├── Services              // Implementações dos serviços
-    │   └── Validators            // Fluent validations dos DTOs de request e response
-    │    
-    ├── BankChallenge.Infrastructure     // Camada de infraestrutura
-    │    ├── Helpers                     // Classes de utilidade para a camada de infraestrutura
-    │    └── Repositories                // Implementações dos repositórios
-    │
-    │── BankChallenge.Shared     // Camada com classes genéricas e sem regras de negócios que são compartilhadas com os outros projetos
-    │    ├── Dtos                // Data Transfer Objects
-    │    └── Helpers             // Classes de utilitários genéricos para compartilhar com outras camadas
-    │
-    └── BankChallenge.UnitTests      // Camada de Testes unitários
-         ├── Builders                // Classes utilizando o padão Builder para constuir os Requests e os Mocks para os testes unitários 
-         ├── Mocks                   // Classes com Mocks de repositórios
-         └── Services                // Classes de Testes dos Serviços 
-```
+1. **Requisição de Exemplo:**
+   ```json
+   {
+       "email": "assis@email.com",
+       "password": "Senha123@",
+       "cpf": "52681717043",
+       "name": "Matheus de Assis",
+       "birthdate": "1997-05-06",
+       "address": "Rua A, 123",
+       "initialDeposit": 20000.00
+   }
+   ```
+2. **Resposta**
+   
+   ![signup-response](https://github.com/assis402/BankChallenge/assets/72348081/fcb7c818-0f96-41cd-a619-465cb80d621e)
 
-## Padrões de Design e Arquitetura
+### 2. SignIn
+#### POST: `/v1/identity/signIn`
 
-- API Rest
-- Clean Architecture
-- Repository
-- Builders
-- Mock <br>
-```Utilizado para construção de respostas simuladas de repositorio nos testes unitários```
-- Unit of Work <br>
-```Padrão de design que agrupa operações relacionadas a banco de dados em uma única transação, garantindo consistência e facilitando o controle sobre as alterações, especialmente quando associado ao padrão Repository.```
+1. **Requisição de Exemplo:**
+   ```json
+   {
+      "cpf": "52681717043",
+      "password": "Senha123@"
+   }
+   ```
 
-## Bibliotecas Externas
+2. **Resposta**
 
-- [Mongo.Driver](https://docs.mongodb.com/drivers/csharp): Biblioteca base para manipulação de dados no banco de dados MongoDB.
-- [FluentValidation](https://fluentvalidation.net/): Biblioteca para validação de DTOs.
+   ![signin-response](https://github.com/assis402/BankChallenge/assets/72348081/3ed655e5-43a8-47d9-ae2d-dbf0f0a9e6f1)
 
-## Bibliotecas Próprias
+### 3. Adicionar Token JWT
+1. Copie o `accesstoken` recebido da responsta do SignIn
+ 
+2. Coloque na modal mostrado após clicar no botão "Authorize"
+   
+   ![image](https://github.com/assis402/BankChallenge/assets/72348081/c910ea68-eeb6-4f37-98b2-31832166126d)
 
-Construí estas duas bibliotecas durante este ano e venho utilizando em meus projetos pessoal. Utilizei neste projeto e aproveitei a oportunidade para melhorar o funcionamento de ambas.
+   ![image](https://github.com/assis402/BankChallenge/assets/72348081/a4ac908c-4b1b-4911-9ff2-1129f6d3de89)
 
-- **Matsoft.MongoDB:** Pacote que facilita a implementação de bancos de dados MongoDB no padrão de design Repository.
-  - [Link Nuget](https://www.nuget.org/packages/Matsoft.MongoDB)
-  - [Link GitHub](https://github.com/assis402/Matsoft.MongoDB)
-- **Matsoft.ApiResults:** Pacote projetado para facilitar o retorno de dados em APIs, cobrindo casos de sucesso e erro. Pode ser utilizado em conjunto com a biblioteca FluentValidation, mas também pode ser usado de forma independente.
-  - [Link Nuget](https://www.nuget.org/packages/Matsoft.ApiResults)
-  - [Link GitHub](https://github.com/assis402/Matsoft.ApiResults)
 
-## Environments
+### 4. Buscar as contas vinculadas ao titular
+#### GET: `/v1/account`
 
-- As configurações do projeto são gerenciadas utilizando um arquivo `.env` e é lido pelo próprio código do projeto. O arquivo se encontra no repositório do GitHub com a finalidade de facilidar o deploy na Azure, mas o mais correto seria isolar as enviroments utilizando um recurso de segurança, por exemplo o Key Vault da Azure.
+1. **Esta requisição não necessida de nenhum parâmetro**
+2. **Resposta**
+   
+   ![image](https://github.com/assis402/BankChallenge/assets/72348081/402b964e-cf35-4d17-a4c4-9af347f7b982)
 
-## CI/CD com GitHub Actions
+### 5. Depósito
+#### POST: `/v1/financialTransaction/deposit`
 
-- O fluxo de integração contínua é gerenciado pelo GitHub Actions, realizando deploy automaticamente no Azure Container App ao realizar um commit na branch master ou aprovar um Pull Request.
+1. **Requisição de Exemplo:**
+   ```json
+   {
+      "accountNumber": "05949-0",
+      "amount": 1000.00
+   }
+   ```
 
-## Banco de Dados Hospedado
+2. **Resposta**
+   
+   ![image](https://github.com/assis402/BankChallenge/assets/72348081/b3e93acf-296e-40a2-bee0-d6f3c43aa0fe)
 
-- O banco de dados está hospedado no serviço de nuvem do próprio MongoDB Atlas (Plano Gratuito).
+### 6. Saque
+#### POST: `/v1/financialTransaction/withdraw`
 
-## Deploy na Azure com Azure Container App
+1. **Requisição de Exemplo:**
+   ```json
+   {
+      "accountNumber": "05949-0",
+      "amount": 50.00
+   }
+   ```
 
-- A aplicação é implantada na Azure utilizando Azure Container Apps, um serviço da Microsoft Azure projetado para simplificar a implementação e o gerenciamento de aplicativos baseados em contêineres na nuvem. Ele oferece uma abordagem serverless para contêineres, permitindo que os desenvolvedores se concentrem no código e na lógica de aplicativos, enquanto a plataforma cuida da infraestrutura subjacente.
+2. **Resposta**
+   
+   ![image](https://github.com/assis402/BankChallenge/assets/72348081/e7c4ad4c-4d70-4274-929f-52922c388bc4)
 
-## Links para realização de testes
+### 7. TED Interna
+#### POST: `/v1/financialTransaction/tedInTransfer`
 
-- **Link da API na Azure**: https://bankchallengeapi-app-20231215023.lemonocean-43d2f426.eastus2.azurecontainerapps.io
-- **Link do Swagger**: https://bankchallengeapi-app-20231215023.lemonocean-43d2f426.eastus2.azurecontainerapps.io/swagger/index.html
+1. **Requisição de Exemplo de transferência para a conta do Levi Davi Rezende:** 
+   ```json
+   {
+      "accountNumber": "05949-0",
+      "destinationAccountNumber": "02444-0",
+      "amount": 1000.00
+   }
+   ```
 
-## Como Testar via Swagger
+2. **Resposta**
+   
+   ![image](https://github.com/assis402/BankChallenge/assets/72348081/53ab353e-665a-42cf-b9e0-47607ece3a7d)
 
-### Pré-requisitos
+### 8. Solicitar Empréstimo
+#### POST: `/v1/financialTransaction/requestLoan`
 
-- Certifique-se de ter o .NET 8 instalado em sua máquina.
-- Clone o repositório do projeto: `git clone https://github.com/assis402/BankChallenge.git`
-- Navegue até o diretório do projeto: `cd BankChallenge`
+1. **Requisição de Exemplo:** 
+   ```json
+   {
+     "accountNumber": "05949-0",
+     "amount": 5500
+   }
+   ```
+
+2. **Resposta**
+   
+   ![image](https://github.com/assis402/BankChallenge/assets/72348081/65144688-97de-4bd9-a457-53b01c547653)
+
+### 9. Quitar parcialmente uma dívida bancária
+#### POST: `/v1/financialTransaction/payOffDebt`
+
+1. Copiar para esta requisição o `debtId` retornado na resposta da solicitação de empréstimo
+2. Existe a possibilidade de pagar parcialmente ou pagar o valor total, neste exemplo irei pagar parcialmente para depois realizar outra requisição e quitar a dívida
+3. **Requisição de Exemplo:** 
+   ```json
+   {
+     "accountNumber": "05949-0",
+     "amount": 4000,
+     "debtId": "657c9d3749070336b5e2cf2a"
+   }
+   ```
+
+4. **Resposta**
+   
+   ![image](https://github.com/assis402/BankChallenge/assets/72348081/d41dfed3-9657-45dc-8e2a-a7ec4532e29b)
+
+### 10. Quitar totalmente uma dívida bancária
+#### POST: `/v1/financialTransaction/payOffDebt`
+
+1. Copiar para esta requisição o `debtId` retornado na resposta da solicitação de empréstimo
+2. **Requisição de Exemplo:** 
+   ```json
+   {
+     "accountNumber": "05949-0",
+     "amount": 1775,
+     "debtId": "657c9d3749070336b5e2cf2a"
+   }
+   ```
+
+3. **Resposta**
+   
+   ![image](https://github.com/assis402/BankChallenge/assets/72348081/bf61b5fe-6fba-41f5-9ac2-2713bc3f83db)
+
+### 11. Buscar todas as dívidas bancárias de uma conta
+#### GET: `/v1/financialTransaction/getAllDebtsByAccountNumber/{accountNumber}`
+
+1. **Requisição de Exemplo:** => GET /getAllDebtsByAccountNumber/05949-0
+2. **Resposta**
+   
+   ![image](https://github.com/assis402/BankChallenge/assets/72348081/240b39bc-ccd9-446c-a835-a21e039823fd)
+
+### 12. Buscar todas as transações bancárias realizadas por uma conta
+#### GET: `/v1/financialTransaction/{accountNumber}`
+
+1. **Requisição de Exemplo:** => GET /05949-0
+2. **Resposta**
+   
+![image](https://github.com/assis402/BankChallenge/assets/72348081/1806ad6a-1537-4cbb-8e4b-9bd4ecb5bdcd)
