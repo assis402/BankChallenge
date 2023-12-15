@@ -12,16 +12,13 @@ O Swagger é uma ferramenta de código aberto que simplifica o design, a documen
 
 ## Tecnologias Utilizadas
 
-- C# 12
-- .NET 8 <br>
-  - Versão mais recente da plataforma de desenvolvimento da Microsoft.
-- Autenticação com JWT
-- XUnit <br>
-  - Framework de teste de unidade para linguagem C#.
-- MongoDB
-- Docker
-- Azure Container Apps <br>
-  - Serviço da Microsoft Azure que permite implantar e gerenciar aplicativos em contêineres de maneira simplificada na nuvem.
+- **C# 12**
+- **.NET 8**: Versão mais recente da plataforma de desenvolvimento da Microsoft.
+- **Autenticação com JWT**
+- **XUnit**: Framework para testes unitários e integrados para C#.
+- **MongoDB**
+- **Docker**
+- **Azure Container Apps**: Serviço da Microsoft Azure que permite implantar e gerenciar aplicativos em contêineres de maneira simplificada na nuvem.
 <br>
 <div>
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Logo_C_sharp.svg/1200px-Logo_C_sharp.svg.png" height="70">
