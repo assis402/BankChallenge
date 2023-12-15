@@ -34,6 +34,12 @@
     <Compile Remove="Controllers\TestController.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update=".env">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <Target Name="CopyEnvFile" BeforeTargets="Build">
     <Copy SourceFiles="$(CopyEnvFilePath)" DestinationFolder="$(OutputPath)" />
   </Target>
