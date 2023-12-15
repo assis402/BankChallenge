@@ -76,7 +76,8 @@ O Swagger é uma ferramenta de código aberto que simplifica o design, a documen
 ## Execução de Testes Unitários
 Para demonstrar proficiência em testes unitários, foram desenvolvidos nove casos de teste que abrangem os fluxos de três métodos na camada de serviço.
 
-<img src="/.github/readme-imgs/unit-tests-img.png">
+![unit-tests-img](https://github.com/assis402/BankChallenge/assets/72348081/74563a00-a2a9-4e19-ab2f-b837d9e92f22)
+
 
 ## Bibliotecas Externas
 
