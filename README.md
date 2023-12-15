@@ -85,7 +85,8 @@ Para demonstrar proficiência em testes unitários, foram desenvolvidos nove cas
 
 <br>
 
-## Bibliotecas Externas Destacáveis
+## Bibliotecas Externas
+Algumas das principais bibliotecas do NuGet utilizadas no projeto:
 
 - [Mongo.Driver](https://docs.mongodb.com/drivers/csharp): Biblioteca base para manipulação de dados no banco de dados MongoDB.
 - [FluentValidation](https://fluentvalidation.net/): Biblioteca para validação de DTOs.
