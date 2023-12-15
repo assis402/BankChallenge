@@ -1,10 +1,14 @@
 # Tutorial de Teste da Aplicação
 
 ## Introdução
-Este tutorial aborda como realizar testes na aplicação, focando nos métodos de login e cadastro na camada de identidade. Utilize as contas existentes fornecidas para executar os testes.
+Este tutorial aborda como realizar testes na aplicação passando por todos os endpoints.
 - [Acesse o Swagger da aplicação](https://bankchallengeapi-app-20231215023.lemonocean-43d2f426.eastus2.azurecontainerapps.io/swagger/index.html)
 
+<br>
+
 ### Contas para Teste
+Além de criar sua própria conta, você tambêm pode utilizar as contas existentes para executar os testes:
+
 1. **Titular: José da Silva**
    - **CPF**: 94064810066
    - **Senha**: Senha123@
@@ -19,17 +23,23 @@ Este tutorial aborda como realizar testes na aplicação, focando nos métodos d
    - **CPF**: 20346941121
    - **Senha**: Senha123@
    - **Número da Conta**: 02444-0
-  
+
+<br>
+
 ### Observações
 - Lembre-se de ajustar os dados nas requisições conforme necessário e utilizar as informações das contas fornecidas para validar os resultados dos testes.
+- O CPF utilizado no cadastro deve ser um CPF válido. Você pode gerar um através deste site: https://www.4devs.com.br/gerador_de_cpf
 - Url base da API: https://bankchallengeapi-app-20231215023.lemonocean-43d2f426.eastus2.azurecontainerapps.io
+
+<br>
 
 ## Fluxo de Teste
 
-- Exemplo de como realizar uma requisição pelo Swagger: 
-<img src="/.github/swagger.gif" height="70">
+- Exemplo de como realizar uma requisição pelo Swagger:
+  
+   <img src="/.github/swagger.gif">
 
-### 1. SignUp
+### 1. Cadastro
 #### POST: `/v1/identity/sigUn`
 
 1. **Requisição de Exemplo:**
@@ -64,9 +74,9 @@ Este tutorial aborda como realizar testes na aplicação, focando nos métodos d
    ![signin-response](https://github.com/assis402/BankChallenge/assets/72348081/3ed655e5-43a8-47d9-ae2d-dbf0f0a9e6f1)
 
 ### 3. Adicionar Token JWT
-1. Copie o `accesstoken` recebido da responsta do SignIn
- 
-2. Coloque na modal mostrado após clicar no botão "Authorize"
+1. As rotas anteriores não necessitam de autenticação. Porém, todas as próximas utilizam o token JWT.
+2. Copie o `accesstoken` recebido da resposta do SignIn.
+3. Clique no botão "Authorize", cole no modal exibido e clique em "Authorize" novamente.
    
    ![image](https://github.com/assis402/BankChallenge/assets/72348081/c910ea68-eeb6-4f37-98b2-31832166126d)
 
@@ -76,7 +86,7 @@ Este tutorial aborda como realizar testes na aplicação, focando nos métodos d
 ### 4. Buscar as contas vinculadas ao titular
 #### GET: `/v1/account`
 
-1. **Esta requisição não necessida de nenhum parâmetro**
+1. **Esta requisição não necessida de nenhum parâmetro, pois a identificação do titular é retirada do token**
 2. **Resposta**
    
    ![image](https://github.com/assis402/BankChallenge/assets/72348081/402b964e-cf35-4d17-a4c4-9af347f7b982)
@@ -114,7 +124,7 @@ Este tutorial aborda como realizar testes na aplicação, focando nos métodos d
 ### 7. TED Interna
 #### POST: `/v1/financialTransaction/tedInTransfer`
 
-1. **Requisição de Exemplo de transferência para a conta do Levi Davi Rezende:** 
+1. **Requisição de exemplo de transferência para a conta de Levi Davi Rezende:** 
    ```json
    {
       "accountNumber": "05949-0",
