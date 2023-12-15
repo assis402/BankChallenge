@@ -173,8 +173,7 @@ public class FinancialTransactionController(IFinancialTransactionService financi
     /// <code>
     /// {
     ///    "accountNumber": "123456-0",
-    ///    "amount": 1000.00,
-    ///    "paymentDate": "2023-12-31"
+    ///    "amount": 1000.00
     /// }
     /// </code>
     ///

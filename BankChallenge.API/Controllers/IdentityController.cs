@@ -39,7 +39,7 @@ public class IdentityController(IAccountHolderService accountHolderService) : Ba
     public async Task<ActionResult> SignIn(SignInDto signInDto) => await accountHolderService.SignIn(signInDto);
 
     /// <summary>
-    /// Realiza o registro de um novo titular da conta.
+    /// Realiza o cadastro de um novo titular no banco e também a criação de uma conta corrente para tal.
     /// </summary>
     /// <remarks>
     /// Exemplo de requisição:
