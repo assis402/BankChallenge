@@ -6,7 +6,7 @@ A **BankChallenge API** é uma aplicação em .NET 8 que simula funcionalidades 
 
 ## Como Testar via Swagger
 O projeto contém uma documentação própria gerada em Swagger, para facilitar os testes e auxiliar no entendimento de cada endpoint da API.
-[Link com Readme explicando como testar]()
+- [Link do tutorial de teste](../how-test.md)
 
 O Swagger é uma ferramenta de código aberto que simplifica o design, a documentação e o consumo de APIs REST, facilitando a comunicação entre desenvolvedores.
 
@@ -14,14 +14,13 @@ O Swagger é uma ferramenta de código aberto que simplifica o design, a documen
 
 - C# 12
 - .NET 8 <br>
-```Versão mais recente da plataforma de desenvolvimento da Microsoft.```
+  - Versão mais recente da plataforma de desenvolvimento da Microsoft.
 - XUnit <br>
-```Framework de teste de unidade para linguagem C#.```
-```OBS: Para demonstrar proficiência em testes unitários, foram desenvolvidos nove casos de teste que abrangem os fluxos de três métodos na camada de serviço.```
+  - Framework de teste de unidade para linguagem C#.
 - MongoDB
 - Docker
 - Azure Container Apps <br>
-```Serviço da Microsoft Azure que permite implantar e gerenciar aplicativos em contêineres de maneira simplificada na nuvem.```
+  - Serviço da Microsoft Azure que permite implantar e gerenciar aplicativos em contêineres de maneira simplificada na nuvem.
 
 <div>
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Logo_C_sharp.svg/1200px-Logo_C_sharp.svg.png" height="70">
@@ -68,9 +67,14 @@ O Swagger é uma ferramenta de código aberto que simplifica o design, a documen
 - Repository
 - Builders
 - Mock <br>
-```Utilizado para construção de respostas simuladas de repositorio nos testes unitários```
+  - Utilizado para construção de respostas simuladas de repositorio nos testes unitários
 - Unit of Work <br>
-```Padrão de design que agrupa operações relacionadas a banco de dados em uma única transação, garantindo consistência e facilitando o controle sobre as alterações, especialmente quando associado ao padrão Repository.```
+  - Padrão de design que agrupa operações relacionadas a banco de dados em uma única transação, garantindo consistência e facilitando o controle sobre as alterações, especialmente quando associado ao padrão Repository
+
+## Execução de Testes Unitários
+Para demonstrar proficiência em testes unitários, foram desenvolvidos nove casos de teste que abrangem os fluxos de três métodos na camada de serviço.
+
+<img src="/.github/readme-imgs/unit-tests-img.png">
 
 ## Bibliotecas Externas
 
@@ -108,11 +112,3 @@ Construí estas duas bibliotecas durante este ano e venho utilizando em meus pro
 
 - **Link da API na Azure**: https://bankchallengeapi-app-20231215023.lemonocean-43d2f426.eastus2.azurecontainerapps.io
 - **Link do Swagger**: https://bankchallengeapi-app-20231215023.lemonocean-43d2f426.eastus2.azurecontainerapps.io/swagger/index.html
-
-## Como Testar via Swagger
-
-### Pré-requisitos
-
-- Certifique-se de ter o .NET 8 instalado em sua máquina.
-- Clone o repositório do projeto: `git clone https://github.com/assis402/BankChallenge.git`
-- Navegue até o diretório do projeto: `cd BankChallenge`
