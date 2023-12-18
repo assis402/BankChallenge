@@ -20,7 +20,8 @@ O Swagger é uma ferramenta de código aberto que simplifica o design, a documen
 - **C# 12**
 - **.NET 8**: Versão mais recente da plataforma de desenvolvimento da Microsoft.
 - **Autenticação com JWT**
-- **XUnit**: Framework para testes unitários e integrados para C#.
+  - A aplicação utiliza o algoritmo MD5 para criptografar as senhas dos usuários, proporcionando uma camada adicional de segurança. 
+- **XUnit**: Framework para testes unitários para C#.
 - **MongoDB**
 - **Docker**
 - **Azure Container Apps**: Serviço da Microsoft Azure que permite implantar e gerenciar aplicativos em contêineres de maneira simplificada na nuvem.
